@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+		<report
+    	id="partner_xlsx"
+    	model="openacademy.course"
+    	string="Print to XLSX"
+    	report_type="xlsx"
+    	name="openacademy.course.xlsx"
+    	file="openacademy.course.xlsx"
+    	attachment_use="False"
+		/>
+</data>
+</openerp>

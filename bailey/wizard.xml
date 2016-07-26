@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+      
+       <record model="ir.ui.view" id="wizard_form_view">
+            <field name="name">wizard</field>
+            <field name="model">wizard</field>
+            <field name="arch" type="xml">
+                <form string="Download">
+                    <group>
+                        <field name="start_date"/>
+                    </group>
+                    <footer>
+                        <button icon="gtk-execute" name="download" type="object"
+                                string="Download" class="oe_highlight" context="{'xls_export':1}"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+
+        <act_window id="launch_course_wizard"
+                    name="Download" 
+                    res_model="wizard"
+                    view_mode="form"
+                    target="new"/>
+
+        <menuitem id="download_course" parent="openacademy_menu"
+                  action="launch_course_wizard"/>
+       
+
+    </data>
+</openerp>
+
