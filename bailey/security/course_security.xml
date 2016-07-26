@@ -19,5 +19,17 @@
     </record>
 </data>
 <data noupdate="1">
+	<record id="course_rule_1" model="ir.rule">
+        <field name="name">Course Rule for User #1</field>
+        <field name="model_id" ref="model_openacademy_course"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('create_uid','=',user.id)]</field>
+    </record>
+    <record id="course_rule_2" model="ir.rule">
+        <field name="name">Course Rule for User #2</field>
+        <field name="model_id" ref="model_openacademy_course"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('create_uid','!=',user.id)]</field>
+    </record>
 </data>
 </openerp>

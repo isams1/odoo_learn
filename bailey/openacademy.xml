@@ -15,6 +15,7 @@
                         <group>
                             <field name="name"/>
                             <field name="create_date"/>
+                            <field name="tuition_fee"/>
                         </group>
                           <notebook>
                             <page string="Description">
@@ -46,6 +47,7 @@
                     <field name="name"/>
                     <field name="responsible_id"/>
                     <field name="create_date"/>
+                    <field name="tuition_fee"/>
                 </tree>
             </field>
         </record>
@@ -108,6 +110,62 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
+        
+        <record id="display_graph_id" model="ir.ui.view">
+        <field name="name">country.graph</field>
+        <field name="model">openacademy.course</field>
+        <field name="arch" type="xml">
+            <graph string="By Country" type="pivot" stacked="True">
+                <field name="name" type="row"/>
+                <field name="create_date" interval="month" type="col"/>
+                <field name="tuition_fee" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    
+     <record id="filter_course_by_name" model="ir.filters">
+        <field name="name">By Name</field>
+        <field name="model_id">openacademy.course</field>
+        <field name="context">{'group_by': ['create_date:month', 'name']}</field>
+     </record>
+     
+     <record id="filter_course_by_description" model="ir.filters">
+        <field name="name">By Description</field>
+        <field name="model_id">openacademy.course</field>
+        <field name="context">{'group_by': ['create_date:month', 'description']}</field>
+     </record>
+     
+     <record id="filter_course_by_tution" model="ir.filters">
+        <field name="name">By Create Date</field>
+        <field name="model_id">openacademy.course</field>
+        <field name="context">{'group_by': ['name', 'create_date']}</field>
+     </record>
+     
+     <record id="view_report_course_filter" model="ir.ui.view">
+            <field name="name">openacademy.course.report.select</field>
+            <field name="model">openacademy.course</field>
+            <field name="arch" type="xml">
+                <search string="Openademy Course">
+                    <filter name="lead" string="Lead" domain="[('type','=', 'lead')]" help="Show only lead"/>
+                    <filter name="opportunity" string="Opportunity" domain="[('type','=','opportunity')]" help="Show only opportunity"/>
+                    <separator/>
+                </search>
+                <group expand="1" string="Group By">
+                        <filter string="Title" context="{'group_by':'name'}" />
+                </group>
+            </field>
+        </record>
+        
+        
+        <record id="action_for_display_graph" model="ir.actions.act_window">
+             <field name="name">Display Graph</field>
+             <field name="res_model">openacademy.course</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">graph</field>
+             <field name="view_id" ref="display_graph_id"/>
+             <!-- <field name="context">{'search_default_opportunity': 1}</field>-->
+             <field name="help">Opportunities Analysis gives you an instant access to your opportunities with information such as the expected revenue, planned cost, missed deadlines or the number of interactions per opportunity. This report is mainly used by the sales manager in order to do the periodic review with the teams of the sales pipeline.</field>
+         </record>
 
         
 
@@ -141,6 +199,9 @@
         <record model="res.partner.category" id="teacher2">
             <field name="name">Teacher / Level 2</field>
         </record>
+        
+        <menuitem name="Display Graphs" id="menu_display_graphs"
+             parent="openacademy_menu" action="action_for_display_graph" sequence="5"/>
 
 
         <menuitem id="session_menu" name="Sessions"

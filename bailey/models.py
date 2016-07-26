@@ -6,6 +6,7 @@ class Course(models.Model):
 	name = fields.Char(string="Title", required=True)
 	description = fields.Text()
 	create_date = fields.Date('Starting Date', readonly=True)
+	tuition_fee = fields.Float(string='Tuition Fee (USD)')
 	responsible_id = fields.Many2one('res.users',
 		ondelete='set null', string="Responsible", index=True)
 	session_ids = fields.One2many('openacademy.session', 'course_id', string="Sessions")
